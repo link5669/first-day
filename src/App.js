@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     const fetchColorIndex = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/getRound');
+        const response = await axios.get('http://server.milesacq.com:5001/getRound');
         const roundNum = response.data;
         setRound(prevRound => {
           if (prevRound !== roundNum) {
@@ -30,7 +30,7 @@ function App() {
           }
           return prevRound;
         });
-        axios.get('http://localhost:5001/getRoundData').then(e => {
+        axios.get('http://server.milesacq.com:5001/getRoundData').then(e => {
           if (roundData[0] === e.data[0] && roundData[1] === e.data[1]) return;
           setRoundData(e.data);
           setWaiting(false)
@@ -40,7 +40,7 @@ function App() {
       }
 
       if (pdGrid != 0) {
-        axios.get(`http://localhost:5001/getPdData?pd=${pdGrid}`).then(e => {
+        axios.get(`http://server.milesacq.com:5001/getPdData?pd=${pdGrid}`).then(e => {
           setGridData(e.data)
         })
       }
@@ -81,7 +81,7 @@ function App() {
             <label>Type your name:</label>
             <input onChange={(e) => setName(e.target.value)} value={name}></input>
             <button onClick={() => {
-              axios.get(`http://localhost:5001/addChild?name=${name}&pd=${pd}`,)
+              axios.get(`http://server.milesacq.com:5001/addChild?name=${name}&pd=${pd}`,)
               setInSetup(false)
             }}>Start</button>
           </header>
@@ -103,7 +103,7 @@ function App() {
                             return
                           }
                           const cleanedVal = inputValue.replace(".", ",")
-                          axios.post(`http://localhost:5001/submitData?pd=${pdGrid}&data=${myData}&val=${cleanedVal}`)
+                          axios.post(`http://server.milesacq.com:5001/submitData?pd=${pdGrid}&data=${myData}&val=${cleanedVal}`)
                           setWaiting(true)
                         }}>submit!</button>
                       </>
@@ -129,7 +129,7 @@ function App() {
             <option value="9">9</option>
           </select>
           <button onClick={() => {
-            axios.get(`http://localhost:5001/getPdData?pd=${pdGrid}`).then(e => {
+            axios.get(`http://server.milesacq.com:5001/getPdData?pd=${pdGrid}`).then(e => {
               setGridData(e.data)
             })
           }}>go</button>
